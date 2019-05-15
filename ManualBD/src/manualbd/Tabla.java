@@ -31,7 +31,7 @@ public class Tabla extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tabla.getModel();
         int a =model.getRowCount();
         for(int i=0; i<a-1; i++){
-            model.removeRow(i );
+            model.removeRow(i);
         }
         model.removeRow(0);
     }
@@ -61,7 +61,7 @@ public class Tabla extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         bConsulta = new javax.swing.JButton();
         bMostrar = new javax.swing.JButton();
-        bConsulta1 = new javax.swing.JButton();
+        bBorrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -108,10 +108,10 @@ public class Tabla extends javax.swing.JFrame {
             }
         });
 
-        bConsulta1.setText("Borrar");
-        bConsulta1.addActionListener(new java.awt.event.ActionListener() {
+        bBorrar.setText("Borrar");
+        bBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bConsulta1ActionPerformed(evt);
+                bBorrarActionPerformed(evt);
             }
         });
 
@@ -161,7 +161,7 @@ public class Tabla extends javax.swing.JFrame {
                         .addComponent(bConsulta)
                         .addGap(135, 135, 135))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
-                        .addComponent(bConsulta1)
+                        .addComponent(bBorrar)
                         .addGap(148, 148, 148))))
         );
         panelLayout.setVerticalGroup(
@@ -196,7 +196,7 @@ public class Tabla extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addComponent(bConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(bConsulta1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(bBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42))
         );
 
@@ -265,9 +265,23 @@ public class Tabla extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bMostrarActionPerformed
 
-    private void bConsulta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConsulta1ActionPerformed
-        
-    }//GEN-LAST:event_bConsulta1ActionPerformed
+    private void bBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrarActionPerformed
+        String opcion = cbConsulta.getSelectedItem().toString();
+        Object buscar = tConsulta.getText();
+        switch (opcion){
+            case "ID": opcion="id";
+            break;
+            case "Nombre": opcion="nombre";
+            break;
+            case "Nota": opcion="nota";
+            break;
+            default: opcion="nombre";
+            break;
+        }
+        ArrayList<String> alumnos = m.borrarAlumnos(opcion, buscar);
+        borrarTabla();
+        bMostrarActionPerformed(evt);
+    }//GEN-LAST:event_bBorrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -306,8 +320,8 @@ public class Tabla extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAñadir;
+    private javax.swing.JButton bBorrar;
     private javax.swing.JButton bConsulta;
-    private javax.swing.JButton bConsulta1;
     private javax.swing.JButton bMostrar;
     private javax.swing.JComboBox<String> cbConsulta;
     private javax.swing.JLabel jLabel1;

@@ -95,6 +95,27 @@ public class Metodos {
         }
     }
     
+    public ArrayList<String> borrarAlumnos(String campo, Object valor){
+        ArrayList<String> alumnos = new ArrayList<>();
+        String sql = "DELETE FROM alumnos WHERE " + campo + "=?";
+        try (Connection conn = this.conectar();
+            PreparedStatement pstmt  = conn.prepareStatement(sql)){
+            pstmt.setObject(1, valor);
+            ResultSet rs  = pstmt.executeQuery();
+            while (rs.next()) {
+                alumnos.add(rs.getInt("id") +  "," + 
+                                   rs.getString("nombre") + "," +
+                                   rs.getDouble("nota"));
+                
+            }
+            return alumnos;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            return alumnos;
+        }
+    }
+    
     public void consulta(String tabla, int valor, String campo){
         String sql = "SELECT id," + campo
         + " FROM " + tabla + " WHERE id=?";
