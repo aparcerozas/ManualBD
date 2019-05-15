@@ -17,15 +17,8 @@ public class ManualBD {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Metodos obx = new Metodos();
-        obx.conectar();
-        obx.crearTabla();
-        obx.insertar(1, "Pedro", 7);
-        obx.insertar(2, "Marta", 9);
-        obx.insertar(3, "Jorge", 5);
-        obx.consulta(1);
-        obx.consulta(2);
-        obx.consulta(3);
+        Tabla obx = new Tabla();
+        obx.setVisible(true);
     }
         
 }
