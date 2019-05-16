@@ -25,15 +25,31 @@ public class Tabla extends javax.swing.JFrame {
         initComponents();
         m.conectar();
         m.crearTablaAlumnos();
+        insertarAlumnos(1, "Pedro", 7);
+        insertarAlumnos(2, "Marta", 6);
+        insertarAlumnos(3, "Pedro", 6);
+        insertarAlumnos(4, "Jorge", 5);
+        insertarAlumnos(5, "Marta", 7);
     }
     
-   public void borrarTabla(){
-        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
-        int a =model.getRowCount();
-        for(int i=0; i<a-1; i++){
-            model.removeRow(i);
+    public void borrarTabla(){
+        try {
+            DefaultTableModel modelo=(DefaultTableModel) tabla.getModel();
+            int filas=tabla.getRowCount();
+            for (int i = 0;filas>i; i++) {
+                modelo.removeRow(0);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
         }
-        model.removeRow(0);
+    }
+    
+    public void insertarAlumnos(int id, String nombre, int nota){
+        m.insertarEnAlumnos(id, nombre, nota);
+        String[] alumno = m.devolverAlumno(id).split(",");
+        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+        model.addRow(new Object[]{alumno[0], alumno[1], alumno[2]});
+        ids.add(id);
     }
 
     /**
@@ -147,7 +163,7 @@ public class Tabla extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                                 .addGap(3, 3, 3)
                                 .addComponent(cbConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                                 .addComponent(tConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(60, 60, 60))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
@@ -188,7 +204,7 @@ public class Tabla extends javax.swing.JFrame {
                         .addGap(60, 60, 60)
                         .addComponent(jLabel5))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -214,24 +230,37 @@ public class Tabla extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAñadirActionPerformed
-        int id, nota;
-        String nombre;
-        id = Integer.parseInt(tID.getText());
-        nombre = tNombre.getText();
-        nota = Integer.parseInt(tNota.getText());
-        for (Integer i : ids){
-            if(id == i){
-                JOptionPane.showMessageDialog(null, "El ID especificado ya existe");
-                return;
+    private void bBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrarActionPerformed
+        String opcion = cbConsulta.getSelectedItem().toString();
+        Object buscar = tConsulta.getText();
+        switch (opcion){
+            case "ID": opcion="id";
+            break;
+            case "Nombre": opcion="nombre";
+            break;
+            case "Nota": opcion="nota";
+            break;
+            default: break;
+        }
+        ArrayList<Integer> alumnos = m.borrarAlumnos(opcion, buscar);
+        for (int id : ids){
+            for (int i = 0; i < alumnos.size(); i++) {
+                if(id == alumnos.get(i)){
+                    ids.remove(i);
+                }
             }
         }
-        m.insertarEnAlumnos(id, nombre, nota);
-        String[] alumno = m.devolverAlumno(id).split(",");
-        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
-        model.addRow(new Object[]{alumno[0], alumno[1], alumno[2]});
-        ids.add(id);
-    }//GEN-LAST:event_bAñadirActionPerformed
+        bMostrarActionPerformed(evt);
+    }//GEN-LAST:event_bBorrarActionPerformed
+
+    private void bMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMostrarActionPerformed
+        borrarTabla();
+        for (Integer i : ids){
+            String[] alumno = m.devolverAlumno(i).split(",");
+            DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+            model.addRow(new Object[]{alumno[0], alumno[1], alumno[2]});
+        }
+    }//GEN-LAST:event_bMostrarActionPerformed
 
     private void bConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConsultaActionPerformed
         borrarTabla();
@@ -256,32 +285,24 @@ public class Tabla extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bConsultaActionPerformed
 
-    private void bMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMostrarActionPerformed
-        borrarTabla();
+    private void bAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAñadirActionPerformed
+        int id, nota;
+        String nombre;
+        id = Integer.parseInt(tID.getText());
+        nombre = tNombre.getText();
+        nota = Integer.parseInt(tNota.getText());
         for (Integer i : ids){
-            String[] alumno = m.devolverAlumno(i).split(",");
-            DefaultTableModel model = (DefaultTableModel) tabla.getModel();
-            model.addRow(new Object[]{alumno[0], alumno[1], alumno[2]});
+            if(id == i){
+                JOptionPane.showMessageDialog(null, "El ID especificado ya existe");
+                return;
+            }
         }
-    }//GEN-LAST:event_bMostrarActionPerformed
-
-    private void bBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrarActionPerformed
-        String opcion = cbConsulta.getSelectedItem().toString();
-        Object buscar = tConsulta.getText();
-        switch (opcion){
-            case "ID": opcion="id";
-            break;
-            case "Nombre": opcion="nombre";
-            break;
-            case "Nota": opcion="nota";
-            break;
-            default: opcion="nombre";
-            break;
-        }
-        ArrayList<String> alumnos = m.borrarAlumnos(opcion, buscar);
-        borrarTabla();
-        bMostrarActionPerformed(evt);
-    }//GEN-LAST:event_bBorrarActionPerformed
+        m.insertarEnAlumnos(id, nombre, nota);
+        String[] alumno = m.devolverAlumno(id).split(",");
+        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+        model.addRow(new Object[]{alumno[0], alumno[1], alumno[2]});
+        ids.add(id);
+    }//GEN-LAST:event_bAñadirActionPerformed
 
     /**
      * @param args the command line arguments

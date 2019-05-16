@@ -95,23 +95,29 @@ public class Metodos {
         }
     }
     
-    public ArrayList<String> borrarAlumnos(String campo, Object valor){
-        ArrayList<String> alumnos = new ArrayList<>();
-        String sql = "DELETE FROM alumnos WHERE " + campo + "=?";
+    public ArrayList<Integer> borrarAlumnos(String campo, Object valor){
+        ArrayList<Integer> alumnos = new ArrayList<>();
+        String sql1 = "SELECT id FROM alumnos WHERE " + campo + "=?";
         try (Connection conn = this.conectar();
-            PreparedStatement pstmt  = conn.prepareStatement(sql)){
+            PreparedStatement pstmt  = conn.prepareStatement(sql1)){
             pstmt.setObject(1, valor);
+            pstmt.executeUpdate();
             ResultSet rs  = pstmt.executeQuery();
             while (rs.next()) {
-                alumnos.add(rs.getInt("id") +  "," + 
-                                   rs.getString("nombre") + "," +
-                                   rs.getDouble("nota"));
-                
+                alumnos.add(rs.getInt("id"));
             }
             return alumnos;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
+            String sql2 = "DELETE FROM alumnos WHERE " + campo + "=?";
+            try (Connection conn = this.conectar();
+                PreparedStatement pstmt = conn.prepareStatement(sql2)) {
+                pstmt.setObject(1, valor);
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
             return alumnos;
         }
     }
