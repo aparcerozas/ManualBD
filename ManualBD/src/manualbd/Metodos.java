@@ -95,30 +95,14 @@ public class Metodos {
         }
     }
     
-    public ArrayList<Integer> borrarAlumnos(String campo, Object valor){
-        ArrayList<Integer> alumnos = new ArrayList<>();
-        String sql1 = "SELECT id FROM alumnos WHERE " + campo + "=?";
+    public void borrarAlumno(int id){
+        String sql = "DELETE FROM alumnos WHERE id=?";
         try (Connection conn = this.conectar();
-            PreparedStatement pstmt  = conn.prepareStatement(sql1)){
-            pstmt.setObject(1, valor);
+            PreparedStatement pstmt  = conn.prepareStatement(sql)){
+            pstmt.setInt(1, id);
             pstmt.executeUpdate();
-            ResultSet rs  = pstmt.executeQuery();
-            while (rs.next()) {
-                alumnos.add(rs.getInt("id"));
-            }
-            return alumnos;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        } finally {
-            String sql2 = "DELETE FROM alumnos WHERE " + campo + "=?";
-            try (Connection conn = this.conectar();
-                PreparedStatement pstmt = conn.prepareStatement(sql2)) {
-                pstmt.setObject(1, valor);
-                pstmt.executeUpdate();
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
-            return alumnos;
         }
     }
     
@@ -205,6 +189,21 @@ public class Metodos {
         String sql = "UPDATE alumnos SET nome = ? , "
                 + "nota = ? "
                 + "WHERE referencia = ?";
+        try (Connection conn = this.conectar();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, nome);
+            pstmt.setInt(2, nota);
+            pstmt.setInt(3, referencia);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void modificarAlumno(String nome, int nota, int referencia) {
+        String sql = "UPDATE alumnos SET nombre = ? , "
+                + "nota = ? "
+                + "WHERE id = ?";
         try (Connection conn = this.conectar();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, nome);

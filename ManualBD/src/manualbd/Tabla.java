@@ -77,6 +77,12 @@ public class Tabla extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         bConsulta = new javax.swing.JButton();
         bMostrar = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        bModificar = new javax.swing.JButton();
+        tNombreM = new javax.swing.JTextField();
+        tNotaM = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         bBorrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -108,7 +114,7 @@ public class Tabla extends javax.swing.JFrame {
 
         jLabel4.setText("Inserción de filas");
 
-        jLabel5.setText("Consulta y borrado de filas");
+        jLabel5.setText("Consulta de filas");
 
         bConsulta.setText("Consultar");
         bConsulta.addActionListener(new java.awt.event.ActionListener() {
@@ -124,6 +130,19 @@ public class Tabla extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setText("Modificación de filas");
+
+        bModificar.setText("Modificar");
+        bModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bModificarActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("Nombre");
+
+        jLabel8.setText("Nota");
+
         bBorrar.setText("Borrar");
         bBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,16 +155,23 @@ public class Tabla extends javax.swing.JFrame {
         panelLayout.setHorizontalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLayout.createSequentialGroup()
-                .addGap(224, 224, 224)
-                .addComponent(bMostrar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(panelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLayout.createSequentialGroup()
-                        .addGap(61, 61, 61)
+                        .addContainerGap()
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelLayout.createSequentialGroup()
+                                .addGap(193, 193, 193)
+                                .addComponent(jLabel6))))
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(bMostrar)
+                        .addGap(163, 163, 163)
+                        .addComponent(bBorrar)))
+                .addGap(61, 61, 61)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(panelLayout.createSequentialGroup()
                                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
@@ -158,32 +184,38 @@ public class Tabla extends javax.swing.JFrame {
                                         .addComponent(tNota, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
                                         .addComponent(tNombre)
                                         .addComponent(tID)
-                                        .addComponent(bAñadir)))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addComponent(cbConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
-                                .addComponent(tConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(60, 60, 60))))
+                                        .addComponent(bAñadir))))
+                            .addGroup(panelLayout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(15, 15, 15)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel5)
-                        .addGap(86, 86, 86))))
+                        .addGap(3, 3, 3)
+                        .addComponent(cbConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                        .addComponent(tConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(60, 60, 60))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
-                        .addComponent(bConsulta)
-                        .addGap(135, 135, 135))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
-                        .addComponent(bBorrar)
-                        .addGap(148, 148, 148))))
+                .addGap(68, 68, 68)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tNombreM, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tNotaM, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                .addGap(221, 221, 221)
+                .addComponent(bModificar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bConsulta)
+                .addGap(140, 140, 140))
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLayout.createSequentialGroup()
                         .addComponent(jLabel4)
@@ -200,19 +232,29 @@ public class Tabla extends javax.swing.JFrame {
                             .addComponent(tNota, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
                         .addGap(30, 30, 30)
-                        .addComponent(bAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(60, 60, 60)
-                        .addComponent(jLabel5))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addComponent(bAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel5)
+                    .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(bMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(32, 32, 32)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addComponent(bConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(bBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(34, 34, 34)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tNotaM, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(tNombreM, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addGap(21, 21, 21)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42))
         );
 
@@ -229,29 +271,6 @@ public class Tabla extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void bBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrarActionPerformed
-        String opcion = cbConsulta.getSelectedItem().toString();
-        Object buscar = tConsulta.getText();
-        switch (opcion){
-            case "ID": opcion="id";
-            break;
-            case "Nombre": opcion="nombre";
-            break;
-            case "Nota": opcion="nota";
-            break;
-            default: break;
-        }
-        ArrayList<Integer> alumnos = m.borrarAlumnos(opcion, buscar);
-        for (int id : ids){
-            for (int i = 0; i < alumnos.size(); i++) {
-                if(id == alumnos.get(i)){
-                    ids.remove(i);
-                }
-            }
-        }
-        bMostrarActionPerformed(evt);
-    }//GEN-LAST:event_bBorrarActionPerformed
 
     private void bMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMostrarActionPerformed
         borrarTabla();
@@ -304,6 +323,40 @@ public class Tabla extends javax.swing.JFrame {
         ids.add(id);
     }//GEN-LAST:event_bAñadirActionPerformed
 
+    private void bModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bModificarActionPerformed
+        int fila = tabla.getSelectedRow();
+        if(fila == -1){
+            JOptionPane.showMessageDialog(null, "No hay ninguna fila seleccionada");
+        }
+        else{
+            String nombre = tNombreM.getText();
+            int nota = Integer.parseInt(tNotaM.getText());
+            int id = Integer.parseInt(tabla.getValueAt(fila,0).toString());
+            m.modificarAlumno(nombre, nota, id);
+            bMostrarActionPerformed(evt);
+            JOptionPane.showMessageDialog(null, "Alumno modificado correctamente");
+        }
+
+    }//GEN-LAST:event_bModificarActionPerformed
+
+    private void bBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrarActionPerformed
+        int fila = tabla.getSelectedRow();
+        if(fila == -1){
+            JOptionPane.showMessageDialog(null, "No hay ninguna fila seleccionada");
+        }
+        else{
+            int id = Integer.parseInt(tabla.getValueAt(fila,0).toString());
+            for (int i=0;i<ids.size();i++){
+                if(ids.get(i)==id){
+                    ids.remove(i);
+                }
+            }
+            m.borrarAlumno(id);
+            bMostrarActionPerformed(evt);
+            JOptionPane.showMessageDialog(null, "Alumno eliminado correctamente");
+        }
+    }//GEN-LAST:event_bBorrarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -343,6 +396,7 @@ public class Tabla extends javax.swing.JFrame {
     private javax.swing.JButton bAñadir;
     private javax.swing.JButton bBorrar;
     private javax.swing.JButton bConsulta;
+    private javax.swing.JButton bModificar;
     private javax.swing.JButton bMostrar;
     private javax.swing.JComboBox<String> cbConsulta;
     private javax.swing.JLabel jLabel1;
@@ -350,12 +404,17 @@ public class Tabla extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel panel;
     private javax.swing.JTextField tConsulta;
     private javax.swing.JTextField tID;
     private javax.swing.JTextField tNombre;
+    private javax.swing.JTextField tNombreM;
     private javax.swing.JTextField tNota;
+    private javax.swing.JTextField tNotaM;
     private javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
 }
