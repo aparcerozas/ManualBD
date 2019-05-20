@@ -57,6 +57,21 @@ public class Metodos {
         }
     }
     
+    public void crearTablaCursos() {
+        String sql1 = "DROP TABLE IF EXISTS cursos;\n";
+        String sql2 = "CREATE TABLE IF NOT EXISTS cursos (\n"
+                + "id integer PRIMARY KEY,\n"
+                + "nombre text NOT NULL\n"
+                + ");";
+        try (Connection conn = this.conectar();
+            Statement stmt = conn.createStatement()) {
+            stmt.execute(sql1);
+            stmt.execute(sql2);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
     public void insertar(String tabla, int id, String palabra, int numero) {
         String sql = "INSERT INTO " + tabla + " VALUES(?,?,?)";
         try (Connection conn = this.conectar();
@@ -81,6 +96,22 @@ public class Metodos {
             JOptionPane.showMessageDialog(null, "Alumno registrado correctamente");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al introducir los datos");
+        }
+    }
+    
+    public void insertarCursos() {
+        String sql1 = "INSERT INTO cursos VALUES(1,'DAM1º');";
+        String sql2 = "INSERT INTO cursos VALUES(2,'DAM2º');";
+        String sql3 = "INSERT INTO cursos VALUES(3,'ASIR1º');";
+        String sql4 = "INSERT INTO cursos VALUES(4,'ASIR2º');";
+        try (Connection conn = this.conectar();
+            Statement stmt = conn.createStatement()) {
+            stmt.execute(sql1);
+            stmt.execute(sql2);
+            stmt.execute(sql3);
+            stmt.execute(sql4);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
     }
     

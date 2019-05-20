@@ -25,6 +25,8 @@ public class Tabla extends javax.swing.JFrame {
         initComponents();
         m.conectar();
         m.crearTablaAlumnos();
+        m.crearTablaCursos();
+        m.insertarCursos();
         insertarAlumnos(1, "Pedro", 7);
         insertarAlumnos(2, "Marta", 6);
         insertarAlumnos(3, "Pedro", 6);
@@ -44,7 +46,7 @@ public class Tabla extends javax.swing.JFrame {
         }
     }
     
-    public void insertarAlumnos(int id, String nombre, int nota){
+    public final void insertarAlumnos(int id, String nombre, int nota){
         m.insertarEnAlumnos(id, nombre, nota);
         String[] alumno = m.devolverAlumno(id).split(",");
         DefaultTableModel model = (DefaultTableModel) tabla.getModel();
