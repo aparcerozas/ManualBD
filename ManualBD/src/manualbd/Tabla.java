@@ -5,6 +5,7 @@
  */
 package manualbd;
 
+
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -27,11 +28,11 @@ public class Tabla extends javax.swing.JFrame {
         m.crearTablaAlumnos();
         m.crearTablaCursos();
         m.insertarCursos();
-        insertarAlumnos(1, "Pedro", 7);
-        insertarAlumnos(2, "Marta", 6);
-        insertarAlumnos(3, "Pedro", 6);
-        insertarAlumnos(4, "Jorge", 5);
-        insertarAlumnos(5, "Marta", 7);
+        insertarAlumnos(1, "Pedro", 7, 1);
+        insertarAlumnos(2, "Marta", 6, 3);
+        insertarAlumnos(3, "Pedro", 6, 1);
+        insertarAlumnos(4, "Jorge", 5, 2);
+        insertarAlumnos(5, "Marta", 7, 4);
     }
     
     public void borrarTabla(){
@@ -46,11 +47,11 @@ public class Tabla extends javax.swing.JFrame {
         }
     }
     
-    public final void insertarAlumnos(int id, String nombre, int nota){
-        m.insertarEnAlumnos(id, nombre, nota);
+    public final void insertarAlumnos(int id, String nombre, int nota, int curso){
+        m.insertarEnAlumnos(id, nombre, nota, curso);
         String[] alumno = m.devolverAlumno(id).split(",");
         DefaultTableModel model = (DefaultTableModel) tabla.getModel();
-        model.addRow(new Object[]{alumno[0], alumno[1], alumno[2]});
+        model.addRow(new Object[]{alumno[0], alumno[1], alumno[2], m.obtenerCurso(Integer.parseInt(alumno[3]))});
         ids.add(id);
     }
 
@@ -86,6 +87,8 @@ public class Tabla extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         bBorrar = new javax.swing.JButton();
+        cbCurso = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -94,7 +97,7 @@ public class Tabla extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Nombre", "Nota"
+                "ID", "Nombre", "Nota", "Curso"
             }
         ));
         jScrollPane1.setViewportView(tabla);
@@ -152,6 +155,10 @@ public class Tabla extends javax.swing.JFrame {
             }
         });
 
+        cbCurso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
+
+        jLabel9.setText("ID Curso");
+
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
         panelLayout.setHorizontalGroup(
@@ -178,25 +185,27 @@ public class Tabla extends javax.swing.JFrame {
                                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel1)
-                                    .addComponent(jLabel3))
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel9))
                                 .addGap(46, 46, 46)
                                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
-                                    .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(tNota, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-                                        .addComponent(tNombre)
-                                        .addComponent(tID)
-                                        .addComponent(bAñadir))))
+                                    .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(bAñadir)
+                                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(cbCurso, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(tNota, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                                            .addComponent(tNombre, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(tID, javax.swing.GroupLayout.Alignment.LEADING)))))
                             .addGroup(panelLayout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(15, 15, 15)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
-                        .addGap(3, 3, 3)
+                        .addContainerGap(105, Short.MAX_VALUE))
+                    .addGroup(panelLayout.createSequentialGroup()
                         .addComponent(cbConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(tConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(60, 60, 60))))
+                        .addGap(56, 56, 56))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                 .addGap(68, 68, 68)
                 .addComponent(jLabel7)
@@ -233,26 +242,32 @@ public class Tabla extends javax.swing.JFrame {
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(tNota, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
-                        .addGap(30, 30, 30)
-                        .addComponent(bAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel5)
-                    .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(bMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(bBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(32, 32, 32)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(bMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(bAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(39, 39, 39)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGap(34, 34, 34)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel5))
+                .addGap(40, 40, 40)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tNotaM, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
                     .addComponent(tNombreM, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel7)
+                    .addComponent(cbConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -279,7 +294,7 @@ public class Tabla extends javax.swing.JFrame {
         for (Integer i : ids){
             String[] alumno = m.devolverAlumno(i).split(",");
             DefaultTableModel model = (DefaultTableModel) tabla.getModel();
-            model.addRow(new Object[]{alumno[0], alumno[1], alumno[2]});
+            model.addRow(new Object[]{alumno[0], alumno[1], alumno[2], m.obtenerCurso(Integer.parseInt(alumno[3]))});
         }
     }//GEN-LAST:event_bMostrarActionPerformed
 
@@ -302,26 +317,27 @@ public class Tabla extends javax.swing.JFrame {
             int id = Integer.parseInt(alumnos.get(i).split(",")[0]);
             String[] alumno = m.devolverAlumno(id).split(",");
             DefaultTableModel model = (DefaultTableModel) tabla.getModel();
-            model.addRow(new Object[]{alumno[0], alumno[1], alumno[2]});
+            model.addRow(new Object[]{alumno[0], alumno[1], alumno[2], m.obtenerCurso(Integer.parseInt(alumno[3]))});
         }
     }//GEN-LAST:event_bConsultaActionPerformed
 
     private void bAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAñadirActionPerformed
-        int id, nota;
+        int id, nota, curso;
         String nombre;
         id = Integer.parseInt(tID.getText());
         nombre = tNombre.getText();
         nota = Integer.parseInt(tNota.getText());
+        curso = Integer.parseInt(cbCurso.getSelectedItem().toString());
         for (Integer i : ids){
             if(id == i){
                 JOptionPane.showMessageDialog(null, "El ID especificado ya existe");
                 return;
             }
         }
-        m.insertarEnAlumnos(id, nombre, nota);
+        m.insertarEnAlumnos(id, nombre, nota, curso);
         String[] alumno = m.devolverAlumno(id).split(",");
         DefaultTableModel model = (DefaultTableModel) tabla.getModel();
-        model.addRow(new Object[]{alumno[0], alumno[1], alumno[2]});
+        model.addRow(new Object[]{alumno[0], alumno[1], alumno[2], m.obtenerCurso(Integer.parseInt(alumno[3]))});
         ids.add(id);
     }//GEN-LAST:event_bAñadirActionPerformed
 
@@ -338,7 +354,6 @@ public class Tabla extends javax.swing.JFrame {
             bMostrarActionPerformed(evt);
             JOptionPane.showMessageDialog(null, "Alumno modificado correctamente");
         }
-
     }//GEN-LAST:event_bModificarActionPerformed
 
     private void bBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrarActionPerformed
@@ -401,6 +416,7 @@ public class Tabla extends javax.swing.JFrame {
     private javax.swing.JButton bModificar;
     private javax.swing.JButton bMostrar;
     private javax.swing.JComboBox<String> cbConsulta;
+    private javax.swing.JComboBox<String> cbCurso;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -409,6 +425,7 @@ public class Tabla extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel panel;
     private javax.swing.JTextField tConsulta;
