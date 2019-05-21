@@ -108,7 +108,7 @@ public class Tabla extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tablaA);
 
-        bAñadir.setText("Añadir fila");
+        bAñadir.setText("Añadir");
         bAñadir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bAñadirActionPerformed(evt);
@@ -301,6 +301,7 @@ public class Tabla extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Evento del botón Borrar, que elimina una fila de la tabla alumnos al seleccionarla
     private void bBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrarActionPerformed
         int fila = tablaA.getSelectedRow();
         if(fila == -1){
@@ -319,6 +320,9 @@ public class Tabla extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bBorrarActionPerformed
 
+    //Evento del botón Modificar, que modifica la fila seleccionada
+    //con los datos de dos TextField
+    //Se puede modificar el curso si se selecciona en la tabla cursos
     private void bModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bModificarActionPerformed
         int filaA = tablaA.getSelectedRow();
         int filaC = tablaC.getSelectedRow();
@@ -331,7 +335,6 @@ public class Tabla extends javax.swing.JFrame {
             int id = Integer.parseInt(tablaA.getValueAt(filaA,0).toString());
             m.modificarAlumno(nombre, nota, id);
             bMostrarActionPerformed(evt);
-            JOptionPane.showMessageDialog(null, "Alumno modificado correctamente");
         }
         else{
             String nombre = tNombreM.getText();
@@ -340,10 +343,11 @@ public class Tabla extends javax.swing.JFrame {
             int curso = Integer.parseInt(tablaC.getValueAt(filaC,0).toString());
             m.modificarAlumnoCurso(nombre, nota, curso, id);
             bMostrarActionPerformed(evt);
-            JOptionPane.showMessageDialog(null, "Alumno modificado correctamente");
         }
     }//GEN-LAST:event_bModificarActionPerformed
 
+    //Evento del botón Mostrar, que muestra todas las filas de la tabla alumnos y cursos
+    //Usada para reiniciar la vista de la tabla después de las consultas
     private void bMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMostrarActionPerformed
         borrarTabla(tablaA);
         for (Integer i : ids){
@@ -382,6 +386,8 @@ public class Tabla extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bConsultaActionPerformed
 
+    //Evento del botón Añadir, que inserta una nueva fila en la tabla alumnos
+    //usando tres TextField y la tabla cursos para seleccionar el curso
     private void bAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAñadirActionPerformed
         int fila = tablaC.getSelectedRow();
         int id, nota, curso;

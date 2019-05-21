@@ -14,6 +14,12 @@ import javax.swing.JOptionPane;
  * @author aparcerozas
  */
 public class Metodos {
+    //Método de conexión a la base de datos, especificando la url
+
+    /**
+     *
+     * @return
+     */
     public Connection conectar() {
         String url = "jdbc:sqlite:manual.db";
         Connection conn = null;
@@ -25,6 +31,11 @@ public class Metodos {
         return conn;
     }
     
+    //Método de creación de la tabla alumnos
+
+    /**
+     *
+     */
     public void crearTablaAlumnos() {
         String sql1 = "DROP TABLE IF EXISTS alumnos;\n";
         String sql2 = "CREATE TABLE IF NOT EXISTS alumnos (\n"
@@ -42,6 +53,15 @@ public class Metodos {
         }
     }
     
+    //Método para insertar filas en la tabla alumnos
+
+    /**
+     *
+     * @param id
+     * @param nombre
+     * @param nota
+     * @param curso
+     */
     public void insertarAlumno(int id, String nombre, int nota, int curso) {
         String sql = "INSERT INTO alumnos VALUES(?,?,?,?)";
         try (Connection conn = this.conectar();
@@ -57,6 +77,15 @@ public class Metodos {
         }
     }
     
+    //Método para modificar el nombre y nota de una fila de la tabla alumnos,
+    //especificando el id
+
+    /**
+     *
+     * @param nome
+     * @param nota
+     * @param referencia
+     */
     public void modificarAlumno(String nome, int nota, int referencia) {
         String sql = "UPDATE alumnos SET nombre = ? , "
                 + "nota = ? "
@@ -67,11 +96,22 @@ public class Metodos {
             pstmt.setInt(2, nota);
             pstmt.setInt(3, referencia);
             pstmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Alumno modificado correctamente");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
     
+    //Método para modificar el nombre, nota y curso de una fila de la tabla alumnos,
+    //especificando el id
+
+    /**
+     *
+     * @param nome
+     * @param nota
+     * @param curso
+     * @param referencia
+     */
     public void modificarAlumnoCurso(String nome, int nota, int curso, int referencia) {
         String sql = "UPDATE alumnos SET nombre = ? , "
                 + "nota = ? , "
@@ -84,11 +124,18 @@ public class Metodos {
             pstmt.setInt(3, curso);
             pstmt.setInt(4, referencia);
             pstmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Alumno modificado correctamente");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
     
+    //Método para borrar una fila de la tabla alumnos, especificando el id
+
+    /**
+     *
+     * @param id
+     */
     public void borrarAlumno(int id){
         String sql = "DELETE FROM alumnos WHERE id=?";
         try (Connection conn = this.conectar();
@@ -100,6 +147,16 @@ public class Metodos {
         }
     }
     
+    //Método para buscar filas de la tabla alumnos,
+    //especificando cualquiera de sus campos
+    //Devuelve un ArrayList con todos los campos de las filas
+
+    /**
+     *
+     * @param campo
+     * @param valor
+     * @return
+     */
     public ArrayList<String> consultaAlumnos(String campo, Object valor){
         ArrayList<String> alumnos = new ArrayList<>();
         String sql = "SELECT id,nombre,nota,curso"
@@ -122,6 +179,14 @@ public class Metodos {
         }
     }
     
+    //Método que devuelve un String con todos los campos de una fila,
+    //especificando el id
+
+    /**
+     *
+     * @param id
+     * @return
+     */
     public String devolverAlumno(int id){
         String sql = "SELECT id,nombre,nota,curso"
         + " FROM alumnos WHERE id=?";
@@ -144,6 +209,11 @@ public class Metodos {
         }
     }
     
+    //Método de creación de la tabla cursos
+
+    /**
+     *
+     */
     public void crearTablaCursos() {
         String sql1 = "DROP TABLE IF EXISTS cursos;\n";
         String sql2 = "CREATE TABLE IF NOT EXISTS cursos (\n"
@@ -159,6 +229,12 @@ public class Metodos {
         }
     }
     
+    //Método para insertar las filas de la tabla cursos
+    //La tabla no es modificable y viene con estas filas por defecto
+
+    /**
+     *
+     */
     public void insertarCursos() {
         String sql1 = "INSERT INTO cursos VALUES(1,'DAM1º');";
         String sql2 = "INSERT INTO cursos VALUES(2,'DAM2º');";
@@ -175,6 +251,13 @@ public class Metodos {
         }
     }
     
+    //Método que devuelve el nombre del curso, especificando el id
+
+    /**
+     *
+     * @param id
+     * @return
+     */
     public String obtenerCurso(int id){
         String sql = "SELECT nombre FROM cursos where id = ?;";
         String resultado = "";
@@ -193,6 +276,14 @@ public class Metodos {
         }
     }
     
+    //Método que devuelve un String con todos los campos de una fila,
+    //especificando el id
+
+    /**
+     *
+     * @param id
+     * @return
+     */
     public String devolverCurso(int id){
         String sql = "SELECT id,nombre"
         + " FROM cursos WHERE id=?";
