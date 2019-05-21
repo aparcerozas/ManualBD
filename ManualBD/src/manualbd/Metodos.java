@@ -25,22 +25,6 @@ public class Metodos {
         return conn;
     }
     
-//    public void crearTabla(String tabla, String palabra, String numero) {
-//        String sql1 = "DROP TABLE IF EXISTS " + tabla + ";\n";
-//        String sql2 = "CREATE TABLE IF NOT EXISTS " + tabla + " (\n"
-//                + "id integer PRIMARY KEY,\n"
-//                + palabra + " text NOT NULL,\n"
-//                + numero + " integer\n"
-//                + ");";    
-//        try (Connection conn = this.conectar();
-//            Statement stmt = conn.createStatement()) {
-//            stmt.execute(sql1);
-//            stmt.execute(sql2);
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
-    
     public void crearTablaAlumnos() {
         String sql1 = "DROP TABLE IF EXISTS alumnos;\n";
         String sql2 = "CREATE TABLE IF NOT EXISTS alumnos (\n"
@@ -58,20 +42,7 @@ public class Metodos {
         }
     }
     
-//    public void insertar(String tabla, int id, String palabra, int numero) {
-//        String sql = "INSERT INTO " + tabla + " VALUES(?,?,?)";
-//        try (Connection conn = this.conectar();
-//            PreparedStatement pstmt = conn.prepareStatement(sql)) {
-//            pstmt.setInt(1, id);
-//            pstmt.setString(2, palabra);
-//            pstmt.setInt(3, numero);
-//            pstmt.executeUpdate();
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
-    
-    public void insertarEnAlumnos(int id, String nombre, int nota, int curso) {
+    public void insertarAlumno(int id, String nombre, int nota, int curso) {
         String sql = "INSERT INTO alumnos VALUES(?,?,?,?)";
         try (Connection conn = this.conectar();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -86,16 +57,37 @@ public class Metodos {
         }
     }
     
-//    public void borrar(String tabla, int id) {
-//        String sql = "DELETE FROM " + tabla + " WHERE id = ?";
-//        try (Connection conn = this.conectar();
-//            PreparedStatement pstmt = conn.prepareStatement(sql)) {
-//            pstmt.setInt(1, id);
-//            pstmt.executeUpdate();
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
+    public void modificarAlumno(String nome, int nota, int referencia) {
+        String sql = "UPDATE alumnos SET nombre = ? , "
+                + "nota = ? "
+                + "WHERE id = ?";
+        try (Connection conn = this.conectar();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, nome);
+            pstmt.setInt(2, nota);
+            pstmt.setInt(3, referencia);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void modificarAlumnoCurso(String nome, int nota, int curso, int referencia) {
+        String sql = "UPDATE alumnos SET nombre = ? , "
+                + "nota = ? , "
+                + "curso = ?"
+                + "WHERE id = ?";
+        try (Connection conn = this.conectar();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, nome);
+            pstmt.setInt(2, nota);
+            pstmt.setInt(3, curso);
+            pstmt.setInt(4, referencia);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
     
     public void borrarAlumno(int id){
         String sql = "DELETE FROM alumnos WHERE id=?";
@@ -107,22 +99,6 @@ public class Metodos {
             System.out.println(e.getMessage());
         }
     }
-    
-//    public void consulta(String tabla, int valor, String campo){
-//        String sql = "SELECT id," + campo
-//        + " FROM " + tabla + " WHERE id=?";
-//        try (Connection conn = this.conectar();
-//            PreparedStatement pstmt  = conn.prepareStatement(sql)){
-//            pstmt.setInt(1,valor);
-//            ResultSet rs  = pstmt.executeQuery();
-//            while (rs.next()) {
-//                System.out.println("id: " + rs.getInt("id") +  "\t" + 
-//                                   campo + ": " + rs.getString(campo));
-//            }
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
     
     public ArrayList<String> consultaAlumnos(String campo, Object valor){
         ArrayList<String> alumnos = new ArrayList<>();
@@ -146,27 +122,6 @@ public class Metodos {
         }
     }
     
-//    public String devolver(String tabla, int id, String campo1, String campo2){
-//        String sql = "SELECT id," + campo1 + "," + campo2
-//        + " FROM " + tabla + " WHERE id=?";
-//        String resultado = "";
-//        try (Connection conn = this.conectar();
-//            PreparedStatement pstmt  = conn.prepareStatement(sql)){
-//            pstmt.setInt(1,id);
-//            ResultSet rs  = pstmt.executeQuery();
-//            while (rs.next()) {
-//                resultado = (rs.getInt("id") +  "," + 
-//                                   rs.getString(campo1) + "," +
-//                                   rs.getDouble(campo2));
-//            }
-//            return resultado;
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        } finally {
-//            return resultado;
-//        }
-//    }
-    
     public String devolverAlumno(int id){
         String sql = "SELECT id,nombre,nota,curso"
         + " FROM alumnos WHERE id=?";
@@ -186,36 +141,6 @@ public class Metodos {
             System.out.println(e.getMessage());
         } finally {
             return resultado;
-        }
-    }
-    
-//    public void modificar(String nome, int nota, int referencia) {
-//        String sql = "UPDATE alumnos SET nome = ? , "
-//                + "nota = ? "
-//                + "WHERE referencia = ?";
-//        try (Connection conn = this.conectar();
-//            PreparedStatement pstmt = conn.prepareStatement(sql)) {
-//            pstmt.setString(1, nome);
-//            pstmt.setInt(2, nota);
-//            pstmt.setInt(3, referencia);
-//            pstmt.executeUpdate();
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
-    
-    public void modificarAlumno(String nome, int nota, int referencia) {
-        String sql = "UPDATE alumnos SET nombre = ? , "
-                + "nota = ? "
-                + "WHERE id = ?";
-        try (Connection conn = this.conectar();
-            PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, nome);
-            pstmt.setInt(2, nota);
-            pstmt.setInt(3, referencia);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
         }
     }
     
@@ -267,5 +192,119 @@ public class Metodos {
             return resultado;
         }
     }
+    
+    public String devolverCurso(int id){
+        String sql = "SELECT id,nombre"
+        + " FROM cursos WHERE id=?";
+        String resultado = "";
+        try (Connection conn = this.conectar();
+            PreparedStatement pstmt  = conn.prepareStatement(sql)){
+            pstmt.setInt(1,id);
+            ResultSet rs  = pstmt.executeQuery();
+            while (rs.next()) {
+                resultado = (rs.getInt("id") +  "," + 
+                                   rs.getString("nombre"));
+            }
+            return resultado;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            return resultado;
+        }
+    }
+    
+//    public void crearTabla(String tabla, String palabra, String numero) {
+//        String sql1 = "DROP TABLE IF EXISTS " + tabla + ";\n";
+//        String sql2 = "CREATE TABLE IF NOT EXISTS " + tabla + " (\n"
+//                + "id integer PRIMARY KEY,\n"
+//                + palabra + " text NOT NULL,\n"
+//                + numero + " integer\n"
+//                + ");";    
+//        try (Connection conn = this.conectar();
+//            Statement stmt = conn.createStatement()) {
+//            stmt.execute(sql1);
+//            stmt.execute(sql2);
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
+    
+//    public void insertar(String tabla, int id, String palabra, int numero) {
+//        String sql = "INSERT INTO " + tabla + " VALUES(?,?,?)";
+//        try (Connection conn = this.conectar();
+//            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+//            pstmt.setInt(1, id);
+//            pstmt.setString(2, palabra);
+//            pstmt.setInt(3, numero);
+//            pstmt.executeUpdate();
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
+    
+//    public void borrar(String tabla, int id) {
+//        String sql = "DELETE FROM " + tabla + " WHERE id = ?";
+//        try (Connection conn = this.conectar();
+//            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+//            pstmt.setInt(1, id);
+//            pstmt.executeUpdate();
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }  
+    
+//    public void consulta(String tabla, int valor, String campo){
+//        String sql = "SELECT id," + campo
+//        + " FROM " + tabla + " WHERE id=?";
+//        try (Connection conn = this.conectar();
+//            PreparedStatement pstmt  = conn.prepareStatement(sql)){
+//            pstmt.setInt(1,valor);
+//            ResultSet rs  = pstmt.executeQuery();
+//            while (rs.next()) {
+//                System.out.println("id: " + rs.getInt("id") +  "\t" + 
+//                                   campo + ": " + rs.getString(campo));
+//            }
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
+    
+//    public String devolver(String tabla, int id, String campo1, String campo2){
+//        String sql = "SELECT id," + campo1 + "," + campo2
+//        + " FROM " + tabla + " WHERE id=?";
+//        String resultado = "";
+//        try (Connection conn = this.conectar();
+//            PreparedStatement pstmt  = conn.prepareStatement(sql)){
+//            pstmt.setInt(1,id);
+//            ResultSet rs  = pstmt.executeQuery();
+//            while (rs.next()) {
+//                resultado = (rs.getInt("id") +  "," + 
+//                                   rs.getString(campo1) + "," +
+//                                   rs.getDouble(campo2));
+//            }
+//            return resultado;
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        } finally {
+//            return resultado;
+//        }
+//    }
+    
+    
+    
+//    public void modificar(String nome, int nota, int referencia) {
+//        String sql = "UPDATE alumnos SET nome = ? , "
+//                + "nota = ? "
+//                + "WHERE referencia = ?";
+//        try (Connection conn = this.conectar();
+//            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+//            pstmt.setString(1, nome);
+//            pstmt.setInt(2, nota);
+//            pstmt.setInt(3, referencia);
+//            pstmt.executeUpdate();
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
     
 }
