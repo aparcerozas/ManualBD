@@ -23,6 +23,12 @@ public class Tabla extends javax.swing.JFrame {
     Metodos m = new Metodos();
     ArrayList<Integer> ids = new ArrayList<>();
     
+    //En el constructor, me conecto con la base de datos, crear las tablas alumnos
+    //y cursos, añadir filas a la tabla cursos y mostrar filas de alumnos y cursos
+
+    /**
+     *
+     */
     public Tabla() {
         initComponents();
         m.conectar();
@@ -41,6 +47,12 @@ public class Tabla extends javax.swing.JFrame {
         insertarAlumnos(5, "Marta", 7, 4);
     }
     
+    //Método para vaciar las filas de una tabla del programa, no de la base de datos
+
+    /**
+     *
+     * @param tabla
+     */
     public void borrarTabla(JTable tabla){
         try {
             DefaultTableModel modelo=(DefaultTableModel) tabla.getModel();
@@ -53,6 +65,15 @@ public class Tabla extends javax.swing.JFrame {
         }
     }
     
+    //Método para insertar filas a la tabla alumnos desde el código
+
+    /**
+     *
+     * @param id
+     * @param nombre
+     * @param nota
+     * @param curso
+     */
     public final void insertarAlumnos(int id, String nombre, int nota, int curso){
         m.insertarAlumno(id, nombre, nota, curso);
         String[] alumno = m.devolverAlumno(id).split(",");
@@ -363,6 +384,8 @@ public class Tabla extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bMostrarActionPerformed
 
+    //Evento del botón Consultar, que con ayuda de un ComboBox y un TextField
+    //le permite buscar filas que tengan un campo específico con un valor específico
     private void bConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConsultaActionPerformed
         borrarTabla(tablaA);
         String opcion = cbConsulta.getSelectedItem().toString();
