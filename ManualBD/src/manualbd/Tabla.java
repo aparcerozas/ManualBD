@@ -78,7 +78,7 @@ public class Tabla extends javax.swing.JFrame {
         m.insertarAlumno(id, nombre, nota, curso);
         String[] alumno = m.devolverAlumno(id).split(",");
         DefaultTableModel model = (DefaultTableModel) tablaA.getModel();
-        model.addRow(new Object[]{alumno[0], alumno[1], alumno[2], m.obtenerCurso(Integer.parseInt(alumno[3]))});
+        model.addRow(new Object[]{alumno[0], alumno[1], alumno[2], m.obtenerNombreCurso(Integer.parseInt(alumno[3]))});
         ids.add(id);
     }
 
@@ -142,7 +142,7 @@ public class Tabla extends javax.swing.JFrame {
 
         jLabel3.setText("Nota");
 
-        cbConsulta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Nombre", "Nota" }));
+        cbConsulta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Nombre", "Nota", "Curso" }));
 
         jLabel4.setText("Inserción de filas");
 
@@ -374,7 +374,7 @@ public class Tabla extends javax.swing.JFrame {
         for (Integer i : ids){
             String[] alumno = m.devolverAlumno(i).split(",");
             DefaultTableModel model = (DefaultTableModel) tablaA.getModel();
-            model.addRow(new Object[]{alumno[0], alumno[1], alumno[2], m.obtenerCurso(Integer.parseInt(alumno[3]))});
+            model.addRow(new Object[]{alumno[0], alumno[1], alumno[2], m.obtenerNombreCurso(Integer.parseInt(alumno[3]))});
         }
         borrarTabla(tablaC);
         for(int i=1;i<5;i++){
@@ -397,6 +397,9 @@ public class Tabla extends javax.swing.JFrame {
             break;
             case "Nota": opcion="nota";
             break;
+            case "Curso": opcion="curso";
+            buscar = m.obtenerIdCurso((String) buscar);
+            break;
             default: opcion="nombre";
             break;
         }
@@ -405,7 +408,7 @@ public class Tabla extends javax.swing.JFrame {
             int id = Integer.parseInt(alumnos.get(i).split(",")[0]);
             String[] alumno = m.devolverAlumno(id).split(",");
             DefaultTableModel model = (DefaultTableModel) tablaA.getModel();
-            model.addRow(new Object[]{alumno[0], alumno[1], alumno[2], m.obtenerCurso(Integer.parseInt(alumno[3]))});
+            model.addRow(new Object[]{alumno[0], alumno[1], alumno[2], m.obtenerNombreCurso(Integer.parseInt(alumno[3]))});
         }
     }//GEN-LAST:event_bConsultaActionPerformed
 
@@ -431,7 +434,7 @@ public class Tabla extends javax.swing.JFrame {
             m.insertarAlumno(id, nombre, nota, curso);
             String[] alumno = m.devolverAlumno(id).split(",");
             DefaultTableModel model = (DefaultTableModel) tablaA.getModel();
-            model.addRow(new Object[]{alumno[0], alumno[1], alumno[2], m.obtenerCurso(Integer.parseInt(alumno[3]))});
+            model.addRow(new Object[]{alumno[0], alumno[1], alumno[2], m.obtenerNombreCurso(Integer.parseInt(alumno[3]))});
             ids.add(id);
         }
     }//GEN-LAST:event_bAñadirActionPerformed

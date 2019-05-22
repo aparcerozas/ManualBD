@@ -258,7 +258,7 @@ public class Metodos {
      * @param id
      * @return
      */
-    public String obtenerCurso(int id){
+    public String obtenerNombreCurso(int id){
         String sql = "SELECT nombre FROM cursos where id = ?;";
         String resultado = "";
         try (Connection conn = this.conectar();
@@ -267,6 +267,24 @@ public class Metodos {
             ResultSet rs  = pstmt.executeQuery();
             while (rs.next()) {
                 resultado = rs.getString("nombre");
+            }
+            return resultado;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            return resultado;
+        }
+    }
+    
+    public int obtenerIdCurso(String nombre){
+        String sql = "SELECT id FROM cursos where nombre = ?;";
+        int resultado = 0;
+        try (Connection conn = this.conectar();
+            PreparedStatement pstmt  = conn.prepareStatement(sql)){
+            pstmt.setString(1,nombre);
+            ResultSet rs  = pstmt.executeQuery();
+            while (rs.next()) {
+                resultado = rs.getInt("id");
             }
             return resultado;
         } catch (SQLException e) {
