@@ -32,9 +32,9 @@ public class Tabla extends javax.swing.JFrame {
     public Tabla() {
         initComponents();
         m.conectar();
-        m.crearTablaAlumnos();
         m.crearTablaCursos();
         m.insertarCursos();
+        m.crearTablaAlumnos();
         for(int i=1;i<5;i++){
             String[] curso = m.devolverCurso(i).split(",");
             DefaultTableModel model = (DefaultTableModel) tablaC.getModel();

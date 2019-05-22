@@ -42,7 +42,9 @@ public class Metodos {
                 + "id integer PRIMARY KEY,\n"
                 + "nombre text NOT NULL,\n"
                 + "nota integer,\n"
-                + "curso integer\n"
+                + "curso integer,\n"
+                + "FOREIGN KEY (curso)\n" 
+                + "REFERENCES cursos(id)\n"
                 + ");";    
         try (Connection conn = this.conectar();
             Statement stmt = conn.createStatement()) {
